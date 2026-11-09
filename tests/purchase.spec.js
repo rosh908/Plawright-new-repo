@@ -1,22 +1,48 @@
-import {test,expect} from '@playwright/test'
-import {LoginPage} from '../Pages/LoginPage.js'
-import { AddToCart } from '../Pages/AddToCart.js'
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../Pages/LoginPage.js';
+import { PurchasePage } from '../Pages/PurchasePage.js';
+import testdata from '../Utils/testdata.json' with { type: 'json' };
 
 
-import testdata from '../Utils/testdata.json' with {type:'json'}
+//Test case 1 - Purchasing a phone
 
-
-//Test case 1 - Logging and adding a product to the cart
-
-test('Logging and adding a product to the cart',async({page})=>{
+test('Purchasing a Phone',async({page})=>{
     const username = testdata.validUsername
     const password = testdata.validPassword
     const login = new LoginPage(page) //object creation , (page) - constructor invoking
-    const addtocart = new AddToCart(page)
+    const purchase = new PurchasePage(page)
+       
     await login.navigateToApplication()
     await login.applicationLogin(username,password)
     await login.loginToTheApplication()
     await login.succesfulllogin()
-    await addtocart.selectTheProduct()
-    await addtocart.AddProductToCart()
+     
+    await purchase.selectPhoneCategory()
+    await purchase.selectTheProduct()
+    await purchase.addPhoneToCart()
+    await purchase.Cart()
+    await purchase.PlaceOrder() 
+    await purchase.PurchaseProduct()
+ 
+})
+
+//Test case 2 - Purchasing a monitor
+test('Purchasing a Monitor',async({page})=>{
+    const username = testdata.validUsername
+    const password = testdata.validPassword
+    const login = new LoginPage(page) //object creation , (page) - constructor invoking
+    const purchase = new PurchasePage(page)
+   
+    await login.navigateToApplication()
+    await login.applicationLogin(username,password)
+    await login.loginToTheApplication()
+    await login.succesfulllogin()
+     
+    await purchase.selectMonitorCategory()
+    await purchase.selectTheMonitor()
+    await purchase.addMonitorToCart()
+    await purchase.Cart()
+    await purchase.PlaceOrder() 
+    await purchase.PurchaseProduct()
+ 
 })
